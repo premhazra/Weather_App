@@ -16,7 +16,7 @@ const WeatherSidebar = ({ city, setCity, unit, timeFormat, weather }) => {
           onChange={(e) => setCity(e.target.value)}
         />
         <button type="submit">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbmR9fI15lST7ep4if4QlXmXE0K5G9EpSDZA&s" alt="search" />
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbmR9fI15lST7ep4if4QlXmXE0K5G9EpSDZA&s" alt="search" />
         </button>
       </form>
       {weather && (
@@ -41,7 +41,6 @@ const WeatherSidebar = ({ city, setCity, unit, timeFormat, weather }) => {
               <i className="fas fa-cloud"></i>
               <p id="condition">{weather.currentConditions.conditions}</p>
             </div>
-           
           </div>
           <div className="location">
             <div className="location-icon">

@@ -1,13 +1,10 @@
 import React from "react";
 import {
-  getDayName,
   getIcon,
-  formatTime,
-  getTemp,
   getUVStatus,
   getHumidityStatus,
   getVisibilityStatus,
-  getAirQualityStatus,
+  getAirQualityStatus
 } from "../utils/weatherHelpers";
 
 const WeatherMain = ({ unit, setUnit, timeFormat, setTimeFormat, weather, loading }) => {
@@ -15,8 +12,7 @@ const WeatherMain = ({ unit, setUnit, timeFormat, setTimeFormat, weather, loadin
     <div className="main">
       <nav>
         <ul className="options">
-          <button className={timeFormat === "hourly" ? "active" : ""} onClick={() => setTimeFormat("hourly")}>today</button>
-          <button className={timeFormat === "week" ? "active" : ""} onClick={() => setTimeFormat("week")}>week</button>
+          <button className="active">Today</button>
         </ul>
         <ul className="options units">
           <button className={unit === "c" ? "active" : ""} onClick={() => setUnit("c")}>°C</button>
@@ -25,24 +21,16 @@ const WeatherMain = ({ unit, setUnit, timeFormat, setTimeFormat, weather, loadin
       </nav>
 
       <div className="cards">
-        {weather &&
-          (timeFormat === "week"
-            ? weather.days.slice(0, 7)
-            : weather.days[0].hours.slice(0, 24)
-          ).map((item, index) => (
-            <div className="card" key={index}>
-              <h2 className="day-name">
-                {timeFormat === "week" ? getDayName(item.datetime) : formatTime(item.datetime)}
-              </h2>
-              <div className="card-icon">
-                <img src={getIcon(item.icon)} className="day-icon" alt="icon" />
-              </div>
-              <div className="day-temp">
-                <h2 className="temp">{getTemp(item.temp, unit)}</h2>
-                <span className="temp-unit">°{unit.toUpperCase()}</span>
-              </div>
-            </div>
-          ))}
+        <div className="card">
+          <h2 className="day-name">Now</h2>
+          <div className="card-icon">
+            <img src={getIcon(weather?.currentConditions?.icon)} className="day-icon" alt="icon" />
+          </div>
+          <div className="day-temp">
+            <h2 className="temp">{weather?.currentConditions?.temp}</h2>
+            <span className="temp-unit">°{unit.toUpperCase()}</span>
+          </div>
+        </div>
       </div>
 
       <div className="highlights">
@@ -52,8 +40,8 @@ const WeatherMain = ({ unit, setUnit, timeFormat, setTimeFormat, weather, loadin
           <HighlightCard title="Wind Status" value={`${weather?.currentConditions?.windspeed} km/h`} />
           <HighlightCard title="Sunrise & Sunset" value={`${weather?.currentConditions?.sunrise} / ${weather?.currentConditions?.sunset}`} />
           <HighlightCard title="Humidity" value={`${weather?.currentConditions?.humidity}%`} status={getHumidityStatus(weather?.currentConditions?.humidity)} />
-          <HighlightCard title="Visibility" value={weather?.currentConditions?.visibility} status={getVisibilityStatus(weather?.currentConditions?.visibility)} />
-          <HighlightCard title="Air Quality" value={weather?.currentConditions?.winddir} status={getAirQualityStatus(weather?.currentConditions?.winddir)} />
+          <HighlightCard title="Visibility" value={`${weather?.currentConditions?.visibility} km`} status={getVisibilityStatus(weather?.currentConditions?.visibility)} />
+          <HighlightCard title="Air Quality" value={`${weather?.currentConditions?.winddir}°`} status={getAirQualityStatus(weather?.currentConditions?.winddir)} />
         </div>
       </div>
 
